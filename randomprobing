@@ -1,0 +1,59 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+#define SIZE 10
+
+// Hash function
+int hash(int key) {
+    return key % SIZE;
+}
+
+// Random probing function
+int randomProbing() {
+    return rand() % SIZE;  // Generate a random index within the table size
+}
+
+// Insert a key into the hash table using random probing
+void insert(int hashTable[], int key) {
+    int index = hash(key);
+
+    // Random probing until an empty slot is found
+    while (hashTable[index] != -1) {
+        index = randomProbing();
+    }
+
+    // Insert the key into the hash table
+    hashTable[index] = key;
+}
+
+// Display the hash table
+void display(int hashTable[]) {
+    printf("Hash Table:\n");
+    for (int i = 0; i < SIZE; i++) {
+        printf("%d: %d\n", i, hashTable[i]);
+    }
+}
+
+int main() {
+    int hashTable[SIZE];
+
+    // Initialize the hash table with -1 (indicating empty slots)
+    for (int i = 0; i < SIZE; i++) {
+        hashTable[i] = -1;
+    }
+
+    // Seed for the random number generator
+    srand(time(NULL));
+
+    // Insert keys into the hash table using random probing
+    insert(hashTable, 5);
+    insert(hashTable, 25);
+    insert(hashTable, 15);
+    insert(hashTable, 35);
+
+    // Display the final hash table
+    display(hashTable);
+
+    return 0;
+}
